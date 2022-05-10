@@ -21,7 +21,7 @@ function App() {
         price: prevState.length * 100 + 100,
         brand: 'some brand',
         description: 'some description',
-        pictureUrl: 'http;//picsum.photos/200',
+        pictureUrl: `http://picsum.photos/seed/${prevState.length + 101}/200`,
       },
     ]);
   };
