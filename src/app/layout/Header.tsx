@@ -1,10 +1,34 @@
-import { AppBar, Toolbar, Typography } from '@mui/material';
+import {
+  AppBar,
+  FormControlLabel,
+  Grid,
+  Switch,
+  Toolbar,
+  Typography,
+} from '@mui/material';
 
-export default function Header() {
+interface Props {
+  darkMode: boolean;
+  handleThemeChange: () => void;
+}
+
+export default function Header({ darkMode, handleThemeChange }: Props) {
   return (
     <AppBar position='static' sx={{ mb: 4 }}>
       <Toolbar>
-        <Typography variant='h6'>SKI-STORE</Typography>
+        <Grid
+          container
+          direction='row'
+          justifyContent='space-between'
+          alignItems='center'
+        >
+          <Typography variant='h6'>SKI-STORE</Typography>
+          <FormControlLabel
+            control={<Switch checked={darkMode} onChange={handleThemeChange} />}
+            label='Switch Theme'
+            labelPlacement='start'
+          />
+        </Grid>
       </Toolbar>
     </AppBar>
   );
