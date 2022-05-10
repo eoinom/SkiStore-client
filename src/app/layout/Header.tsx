@@ -1,14 +1,16 @@
-import { ShoppingCart } from '@mui/icons-material';
+import {
+  ShoppingCart,
+  WbIncandescent,
+  WbIncandescentOutlined,
+} from '@mui/icons-material';
 import {
   AppBar,
   Badge,
   Box,
-  FormControlLabel,
   Grid,
   IconButton,
   List,
   ListItem,
-  Switch,
   Toolbar,
   Typography,
 } from '@mui/material';
@@ -34,6 +36,7 @@ const navStyles = {
   color: 'inherit',
   typography: 'h6',
   textDecoration: 'none',
+  width: 'max-content',
   '&:hover': { color: 'grey.500' },
   '&.active': { color: 'text.secondary' },
 };
@@ -48,7 +51,7 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
           justifyContent='space-between'
           alignItems='center'
         >
-          <Box display='flex' alignItems='center'>
+          <Grid item xs={3}>
             <Typography
               variant='h6'
               component={NavLink}
@@ -58,26 +61,11 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
             >
               SKI-STORE
             </Typography>
-            <Switch checked={darkMode} onChange={handleThemeChange} />
-          </Box>
+          </Grid>
 
-          <List sx={{ display: 'flex' }}>
-            {midLinks.map(({ title, path }) => (
-              <ListItem component={NavLink} to={path} key={path} sx={navStyles}>
-                {title.toUpperCase()}
-              </ListItem>
-            ))}
-          </List>
-
-          <Box display='flex' alignItems='center'>
-            <IconButton size='large' sx={{ color: 'inherit' }}>
-              <Badge badgeContent={4} color='secondary'>
-                <ShoppingCart />
-              </Badge>
-            </IconButton>
-
-            <List sx={{ display: 'flex' }}>
-              {rightLinks.map(({ title, path }) => (
+          <Grid item xs={6}>
+            <List sx={{ display: 'flex', justifyContent: 'center' }}>
+              {midLinks.map(({ title, path }) => (
                 <ListItem
                   component={NavLink}
                   to={path}
@@ -88,7 +76,37 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
                 </ListItem>
               ))}
             </List>
-          </Box>
+          </Grid>
+
+          <Grid item xs={3}>
+            <Box display='flex' alignItems='center' justifyContent='end'>
+              <IconButton
+                size='large'
+                sx={{ color: 'inherit' }}
+                onClick={handleThemeChange}
+              >
+                {darkMode ? <WbIncandescentOutlined /> : <WbIncandescent />}
+              </IconButton>
+              <IconButton size='large' sx={{ color: 'inherit' }}>
+                <Badge badgeContent={4} color='secondary'>
+                  <ShoppingCart />
+                </Badge>
+              </IconButton>
+
+              <List sx={{ display: 'flex' }}>
+                {rightLinks.map(({ title, path }) => (
+                  <ListItem
+                    component={NavLink}
+                    to={path}
+                    key={path}
+                    sx={navStyles}
+                  >
+                    {title.toUpperCase()}
+                  </ListItem>
+                ))}
+              </List>
+            </Box>
+          </Grid>
         </Grid>
       </Toolbar>
     </AppBar>
