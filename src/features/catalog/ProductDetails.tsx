@@ -19,10 +19,12 @@ export default function ProductDetails() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    agent.Catalog.details(parseInt(id))
-      .then((data) => setProduct(data))
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
+    if (id) {
+      agent.Catalog.details(parseInt(id))
+        .then((data) => setProduct(data))
+        .catch((error) => console.error(error))
+        .finally(() => setLoading(false));
+    }
   }, [id]);
 
   if (loading) return <h3>Loading...</h3>;

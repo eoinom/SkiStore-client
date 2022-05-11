@@ -52,7 +52,13 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
           alignItems='center'
         >
           <Grid item xs={3}>
-            <Typography variant='h6' component={NavLink} to='/' sx={navStyles}>
+            <Typography
+              variant='h6'
+              component={NavLink}
+              to='/'
+              exact
+              sx={navStyles}
+            >
               SKI-STORE
             </Typography>
           </Grid>
