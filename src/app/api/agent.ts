@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import { history } from '../..';
 
 axios.defaults.baseURL = 'http://localhost:5000/api/';
+axios.defaults.withCredentials = true;
 
 const sleep = () => new Promise((resolve) => setTimeout(resolve, 500));
 
