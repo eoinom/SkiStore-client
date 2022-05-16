@@ -14,7 +14,7 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 interface Props {
   darkMode: boolean;
@@ -87,7 +87,12 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
               >
                 {darkMode ? <WbIncandescentOutlined /> : <WbIncandescent />}
               </IconButton>
-              <IconButton size='large' sx={{ color: 'inherit' }}>
+              <IconButton
+                component={Link}
+                to='/basket'
+                size='large'
+                sx={{ color: 'inherit' }}
+              >
                 <Badge badgeContent={4} color='secondary'>
                   <ShoppingCart />
                 </Badge>
