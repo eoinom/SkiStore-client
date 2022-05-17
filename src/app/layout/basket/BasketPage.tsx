@@ -2,8 +2,9 @@ import { Add, Delete, Remove } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import {
   Box,
+  Button,
   Grid,
-  IconButton,
+  Link,
   Paper,
   Table,
   TableBody,
@@ -141,6 +142,9 @@ export default function BasketPage() {
         <Grid item xs={6} />
         <Grid item xs={6}>
           <BasketSummary />
+          <Button href='/checkout' variant='contained' size='large' fullWidth>
+            Checkout
+          </Button>
         </Grid>
       </Grid>
     </>
