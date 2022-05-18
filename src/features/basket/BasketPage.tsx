@@ -4,7 +4,6 @@ import {
   Box,
   Button,
   Grid,
-  Link,
   Paper,
   Table,
   TableBody,
@@ -15,13 +14,15 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
-import agent from '../../api/agent';
-import { useStoreContext } from '../../context/StoreContext';
-import { currencyFormat } from '../../utils/currencyFormat';
+import agent from '../../app/api/agent';
+import { useAppDispatch, useAppSelector } from '../../app/store/configureStore';
+import { currencyFormat } from '../../app/utils/currencyFormat';
+import { setBasket, removeItem } from './basketSlice';
 import BasketSummary from './BasketSummary';
 
 export default function BasketPage() {
-  const { basket, setBasket, removeItem } = useStoreContext();
+  const { basket } = useAppSelector((state) => state.basket);
+  const dispatch = useAppDispatch();
   const [status, setStatus] = useState({
     loading: false,
     name: '',
@@ -30,7 +31,7 @@ export default function BasketPage() {
   const handleAddItem = (productId: number, name: string) => {
     setStatus({ loading: true, name });
     agent.Basket.addItem(productId)
-      .then((basket) => setBasket(basket))
+      .then((basket) => dispatch(setBasket(basket)))
       .catch((error) => console.error(error))
       .finally(() => setStatus({ loading: false, name: '' }));
   };
@@ -42,7 +43,7 @@ export default function BasketPage() {
   ) => {
     setStatus({ loading: true, name });
     agent.Basket.removeItem(productId, quantity)
-      .then(() => removeItem(productId, quantity))
+      .then(() => dispatch(removeItem({ productId, quantity })))
       .catch((error) => console.error(error))
       .finally(() => setStatus({ loading: false, name: '' }));
   };

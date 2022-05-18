@@ -5,13 +5,12 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  Grid,
 } from '@mui/material';
-import { useStoreContext } from '../../context/StoreContext';
-import { currencyFormat } from '../../utils/currencyFormat';
+import { useAppSelector } from '../../app/store/configureStore';
+import { currencyFormat } from '../../app/utils/currencyFormat';
 
 export default function BasketSummary() {
-  const { basket } = useStoreContext();
+  const { basket } = useAppSelector((state) => state.basket);
 
   if (!basket) return <></>;
 
