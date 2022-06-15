@@ -12,6 +12,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useEffect } from 'react';
+import CheckboxButtons from '../../app/components/CheckboxButtons';
 import RadioButtonGroup from '../../app/components/RadioButtonGroup';
 import LoadingComponent from '../../app/layout/LoadingComponents';
 import { useAppDispatch, useAppSelector } from '../../app/store/configureStore';
@@ -70,30 +71,26 @@ export default function Catalog() {
         </Paper>
         {brands && brands.length > 0 ? (
           <Paper sx={{ mb: 2, p: 2 }}>
-            <FormGroup>
-              {brands.map((brand: any) => (
-                <FormControlLabel
-                  control={<Checkbox />}
-                  label={brand}
-                  key={brand}
-                />
-              ))}
-            </FormGroup>
+            <CheckboxButtons
+              items={brands}
+              checked={productParams.brands}
+              onChange={(items: string[]) =>
+                dispatch(setProductParams({ brands: items }))
+              }
+            />
           </Paper>
         ) : (
           ''
         )}
         {types && types.length > 0 ? (
           <Paper sx={{ mb: 2, p: 2 }}>
-            <FormGroup>
-              {types.map((type: any) => (
-                <FormControlLabel
-                  control={<Checkbox />}
-                  label={type}
-                  key={type}
-                />
-              ))}
-            </FormGroup>
+            <CheckboxButtons
+              items={types}
+              checked={productParams.types}
+              onChange={(items: string[]) =>
+                dispatch(setProductParams({ types: items }))
+              }
+            />
           </Paper>
         ) : (
           ''
