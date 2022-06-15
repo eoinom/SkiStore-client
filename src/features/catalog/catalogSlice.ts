@@ -124,8 +124,6 @@ export const catalogSlice = createSlice({
     });
     builder.addCase(fetchFilters.fulfilled, (state, action: any) => {
       state.brands = action.payload.brands;
-      console.log('action.payload:');
-      console.log(action.payload);
       state.types = action.payload.types;
       state.filtersLoaded = true;
       state.status = 'idle';
