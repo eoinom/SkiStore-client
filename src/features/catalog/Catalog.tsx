@@ -28,7 +28,6 @@ export default function Catalog() {
     filtersLoaded,
     brands,
     types,
-    status,
     productParams,
     metaData,
   } = useAppSelector((state) => state.catalog);
@@ -42,8 +41,7 @@ export default function Catalog() {
     if (!filtersLoaded) dispatch(fetchFilters());
   }, [filtersLoaded, dispatch]);
 
-  if (status.includes('pending') || !metaData)
-    return <LoadingComponent message='Loading products...' />;
+  if (!filtersLoaded) return <LoadingComponent message='Loading products...' />;
 
   return (
     <Grid container rowSpacing={1} columnSpacing={4} pb={4}>
@@ -92,12 +90,14 @@ export default function Catalog() {
       </Grid>
       <Grid item xs={3} />
       <Grid item xs={9}>
-        <AppPagination
-          metaData={metaData}
-          onPageChange={(page: number) =>
-            dispatch(setPageNumber({ pageNumber: page }))
-          }
-        />
+        {metaData && (
+          <AppPagination
+            metaData={metaData}
+            onPageChange={(page: number) =>
+              dispatch(setPageNumber({ pageNumber: page }))
+            }
+          />
+        )}
       </Grid>
     </Grid>
   );
