@@ -7,22 +7,24 @@ import {
 import { useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import Header from './Header';
+import 'react-toastify/dist/ReactToastify.css';
+import ServerError from '../errors/ServerError';
+import NotFound from '../errors/NotFound';
+import agent from '../api/agent';
+import { getCookie } from '../utils/getCookie';
+import LoadingComponent from './LoadingComponents';
+import { useAppDispatch } from '../store/configureStore';
+import { setBasket } from '../../features/basket/basketSlice';
 import AboutPage from '../../features/about/AboutPage';
 import Catalog from '../../features/catalog/Catalog';
 import ProductDetails from '../../features/catalog/ProductDetails';
 import ContactPage from '../../features/contact/ContactPage';
 import HomePage from '../../features/home/HomePage';
-import Header from './Header';
-import 'react-toastify/dist/ReactToastify.css';
-import ServerError from '../errors/ServerError';
-import NotFound from '../errors/NotFound';
 import BasketPage from '../../features/basket/BasketPage';
-import agent from '../api/agent';
-import { getCookie } from '../utils/getCookie';
-import LoadingComponent from './LoadingComponents';
 import CheckoutPage from '../../features/checkout/CheckoutPage';
-import { useAppDispatch } from '../store/configureStore';
-import { setBasket } from '../../features/basket/basketSlice';
+import Login from '../../features/account/Login';
+import Register from '../../features/account/Register';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -71,6 +73,8 @@ function App() {
           <Route path='/server-error' component={ServerError} />
           <Route path='/basket' component={BasketPage} />
           <Route path='/checkout' component={CheckoutPage} />
+          <Route path='/login' component={Login} />
+          <Route path='/register' component={Register} />
           <Route component={NotFound} />
         </Switch>
       </Container>
