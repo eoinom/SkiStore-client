@@ -8,15 +8,15 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { FieldValues, useForm } from 'react-hook-form';
 import { LoadingButton } from '@mui/lab';
 import { useAppDispatch } from '../../app/store/configureStore';
 import { signInUser } from './accountSlice';
 
 export default function Login() {
-  const history = useHistory();
-  const location = useLocation<any>();
+  const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useAppDispatch();
   const {
     register,
@@ -29,7 +29,7 @@ export default function Login() {
   const submitForm = async (data: FieldValues) => {
     try {
       await dispatch(signInUser(data));
-      history.push(location.state?.from?.pathname || '/catalog');
+      navigate(location.state?.from?.pathname || '/catalog');
     } catch (error) {
       console.error(error);
     }

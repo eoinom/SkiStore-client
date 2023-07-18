@@ -1,8 +1,8 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
-import { history } from '../..';
 import { PaginatedResponse } from '../models/pagination';
 import { store } from '../store/configureStore';
+import { router } from '../router/Routes';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 axios.defaults.withCredentials = true;
@@ -60,7 +60,7 @@ axios.interceptors.response.use(
         toast.error(data.title);
         break;
       case 500:
-        history.push('/server-error', { error: data });
+        router.navigate('/server-error', { state: { error: data } });
         break;
       default:
         break;
