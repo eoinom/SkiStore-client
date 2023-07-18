@@ -77,7 +77,7 @@ export default function Register() {
           autoFocus
           {...register('username', { required: 'Username is required' })}
           error={!!errors.username}
-          helperText={errors?.username?.message?.toString()}
+          helperText={errors?.username?.message as string}
         />
         <TextField
           margin='normal'
@@ -92,7 +92,7 @@ export default function Register() {
             },
           })}
           error={!!errors.email}
-          helperText={errors?.email?.message?.toString()}
+          helperText={errors?.email?.message as string}
         />
         <TextField
           margin='normal'
@@ -108,7 +108,7 @@ export default function Register() {
             },
           })}
           error={!!errors.password}
-          helperText={errors?.password?.message?.toString()}
+          helperText={errors?.password?.message as string}
         />
         <LoadingButton
           loading={isSubmitting}

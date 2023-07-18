@@ -19,14 +19,6 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
-interface ResponseData {
-  data: {
-    title: string;
-    errors: string[];
-  };
-  status: number;
-}
-
 axios.interceptors.response.use(
   async (response) => {
     if (process.env.NODE_ENV === 'development') await sleep();
@@ -42,7 +34,7 @@ axios.interceptors.response.use(
     return response;
   },
   (error: AxiosError) => {
-    const { data, status } = error.response as ResponseData;
+    const { data, status } = error.response as AxiosResponse;
     switch (status) {
       case 400:
         if (data.errors) {
