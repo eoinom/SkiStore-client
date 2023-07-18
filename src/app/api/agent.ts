@@ -72,14 +72,6 @@ function createFormData(item: any) {
   return formData;
 }
 
-const Admin = {
-  createProduct: (product: any) =>
-    requests.postForm('products', createFormData(product)),
-  updateProduct: (product: any) =>
-    requests.putForm('products', createFormData(product)),
-  deleteProduct: (id: number) => requests.delete(`products/${id}`),
-};
-
 const requests = {
   get: (url: string, params?: URLSearchParams) =>
     axios.get(url, { params }).then(responseBody),
@@ -137,6 +129,14 @@ const Orders = {
 
 const Payments = {
   createPaymentIntent: () => requests.post('payments', {}),
+};
+
+const Admin = {
+  createProduct: (product: any) =>
+    requests.postForm('products', createFormData(product)),
+  updateProduct: (product: any) =>
+    requests.putForm('products', createFormData(product)),
+  deleteProduct: (id: number) => requests.delete(`products/${id}`),
 };
 
 const agent = {
