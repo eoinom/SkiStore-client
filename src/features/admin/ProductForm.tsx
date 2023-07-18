@@ -50,7 +50,7 @@ export default function ProductForm({ product, cancelEdit }: Props) {
       dispatch(setProduct(response));
       cancelEdit();
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 

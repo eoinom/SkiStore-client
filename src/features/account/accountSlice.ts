@@ -14,6 +14,13 @@ const initialState: AccountState = {
   user: null,
 };
 
+function decodeUserRolesFromJwt(token: string) {
+  let claims = JSON.parse(atob(token.split('.')[1]));
+  let roles =
+    claims['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+  return typeof roles === 'string' ? [roles] : roles;
+}
+
 export const signInUser = createAsyncThunk<User, FieldValues>(
   'account/signInUser',
   async (data, thunkAPI) => {
@@ -23,8 +30,10 @@ export const signInUser = createAsyncThunk<User, FieldValues>(
       if (basket) {
         thunkAPI.dispatch(setBasket(basket));
       }
-      localStorage.setItem('user', JSON.stringify(user));
-      return user;
+      let roles = decodeUserRolesFromJwt(user.token);
+      const newUser = { ...user, roles };
+      localStorage.setItem('user', JSON.stringify(newUser));
+      return newUser;
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error });
     }
@@ -41,8 +50,10 @@ export const fetchCurrentUser = createAsyncThunk<User>(
       if (basket) {
         thunkAPI.dispatch(setBasket(basket));
       }
-      localStorage.setItem('user', JSON.stringify(user));
-      return user;
+      let roles = decodeUserRolesFromJwt(user.token);
+      const newUser = { ...user, roles };
+      localStorage.setItem('user', JSON.stringify(newUser));
+      return newUser;
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error.data });
     }
@@ -64,14 +75,7 @@ export const accountSlice = createSlice({
       router.navigate('/');
     },
     setUser: (state, action) => {
-      state.user = action.payload;
-      let claims = JSON.parse(atob(action.payload.token.split('.')[1]));
-      let roles =
-        claims['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-      state.user = {
-        ...action.payload,
-        roles: typeof roles === 'string' ? [roles] : roles,
-      };
+      state.user = { ...action.payload };
     },
   },
   extraReducers: (builder) => {
@@ -84,15 +88,7 @@ export const accountSlice = createSlice({
     builder.addMatcher(
       isAnyOf(signInUser.fulfilled, fetchCurrentUser.fulfilled),
       (state, action) => {
-        let claims = JSON.parse(atob(action.payload.token.split('.')[1]));
-        let roles =
-          claims[
-            'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
-          ];
-        state.user = {
-          ...action.payload,
-          roles: typeof roles === 'string' ? [roles] : roles,
-        };
+        state.user = { ...action.payload };
       }
     );
     builder.addMatcher(isAnyOf(signInUser.rejected), (state, action) => {
