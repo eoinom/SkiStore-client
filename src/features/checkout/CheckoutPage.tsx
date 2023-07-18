@@ -17,7 +17,7 @@ import { validationSchema } from './checkoutValidation';
 import agent from '../../app/api/agent';
 import { useAppDispatch, useAppSelector } from '../../app/store/configureStore';
 import { clearBasket } from '../basket/basketSlice';
-import LoadingButton from '@mui/lab/LoadingButton';
+import { LoadingButton } from '@mui/lab';
 import { StripeElementType } from '@stripe/stripe-js';
 import {
   CardNumberElement,
